@@ -1,0 +1,67 @@
+CREATE TABLE TransactionEntity (
+    id TEXT NOT NULL PRIMARY KEY,
+    merchantName TEXT NOT NULL,
+    amount REAL NOT NULL,
+    currency TEXT NOT NULL,
+    category TEXT NOT NULL,
+    status TEXT NOT NULL,
+    timestamp INTEGER NOT NULL,
+    isDebit INTEGER NOT NULL
+);
+
+CREATE TABLE AccountEntity (
+    id TEXT NOT NULL PRIMARY KEY,
+    holderName TEXT NOT NULL,
+    balance REAL NOT NULL,
+    currency TEXT NOT NULL,
+    maskedCardNumber TEXT NOT NULL,
+    updatedAt INTEGER NOT NULL
+);
+
+selectAllTransactions:
+SELECT *
+FROM TransactionEntity
+ORDER BY timestamp DESC;
+
+selectTransactionById:
+SELECT *
+FROM TransactionEntity
+WHERE id = ?;
+
+selectTransactionsByCategory:
+SELECT *
+FROM TransactionEntity
+WHERE category = ?
+ORDER BY timestamp DESC;
+
+upsertTransaction:
+INSERT OR REPLACE INTO TransactionEntity(
+    id,
+    merchantName,
+    amount,
+    currency,
+    category,
+    status,
+    timestamp,
+    isDebit
+)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+deleteAllTransactions:
+DELETE FROM TransactionEntity;
+
+selectAccount:
+SELECT *
+FROM AccountEntity
+LIMIT 1;
+
+upsertAccount:
+INSERT OR REPLACE INTO AccountEntity(
+    id,
+    holderName,
+    balance,
+    currency,
+    maskedCardNumber,
+    updatedAt
+)
+VALUES (?, ?, ?, ?, ?, ?);

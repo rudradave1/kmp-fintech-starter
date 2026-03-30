@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.rudradave.kmpfintechstarter.android.androidApp-mergeDebugResources-65:/values-hdpi-v4/values-hdpi-v4.xml",
+            "map": [
+                {
+                    "source": "/Users/rudradave/.gradle/caches/8.10.2/transforms/7239d4adcb35e9e6a44f27917d58223d/transformed/appcompat-1.7.0/res/values-hdpi-v4/values-hdpi-v4.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "13",
+                        "endOffsets": "327"
+                    }
+                }
+            ]
+        }
+    ]
+}

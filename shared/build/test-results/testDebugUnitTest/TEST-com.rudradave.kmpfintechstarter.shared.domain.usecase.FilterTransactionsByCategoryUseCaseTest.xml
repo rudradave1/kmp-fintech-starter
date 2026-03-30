@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.rudradave.kmpfintechstarter.shared.domain.usecase.FilterTransactionsByCategoryUseCaseTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-03-30T10:20:21" hostname="Rudras-Mac-mini-2.local" time="0.085">
+  <properties/>
+  <testcase name="filters transactions by the selected category" classname="com.rudradave.kmpfintechstarter.shared.domain.usecase.FilterTransactionsByCategoryUseCaseTest" time="0.085"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

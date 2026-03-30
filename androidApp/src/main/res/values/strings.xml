@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">KMP Fintech Starter</string>
+    <string name="dashboard_title">Dashboard</string>
+    <string name="transactions_title">Transactions</string>
+    <string name="recent_transactions_title">Recent transactions</string>
+    <string name="account_balance_label">Available balance</string>
+    <string name="monthly_spend_label">Monthly spend</string>
+    <string name="monthly_income_label">Monthly income</string>
+    <string name="category_all">All</string>
+    <string name="category_food">Food</string>
+    <string name="category_transport">Transport</string>
+    <string name="category_shopping">Shopping</string>
+    <string name="category_entertainment">Entertainment</string>
+    <string name="category_utilities">Utilities</string>
+    <string name="category_health">Health</string>
+    <string name="category_transfer">Transfer</string>
+    <string name="category_other">Other</string>
+    <string name="status_pending">Pending</string>
+    <string name="status_completed">Completed</string>
+    <string name="status_failed">Failed</string>
+    <string name="status_refunded">Refunded</string>
+    <string name="empty_transactions_title">No transactions yet</string>
+    <string name="empty_transactions_body">Pull to refresh to load cached or remote transaction activity.</string>
+    <string name="error_state_title">We could not refresh your data</string>
+    <string name="error_state_body">Cached data remains available. Try again when the network is ready.</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="transaction_detail_title">Transaction detail</string>
+    <string name="transaction_detail_missing">The selected transaction is not available in the local cache.</string>
+    <string name="reference_id_label">Reference ID</string>
+    <string name="category_label">Category</string>
+    <string name="status_label">Status</string>
+    <string name="timestamp_label">Timestamp</string>
+    <string name="status_timeline_title">Status timeline</string>
+</resources>
