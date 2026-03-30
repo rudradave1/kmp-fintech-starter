@@ -5,6 +5,10 @@
 ![KMP](https://img.shields.io/badge/KMP-Multiplatform-blue?logo=kotlin)
 ![License](https://img.shields.io/badge/License-MIT-green) 
 
+<p align="center">
+  <img src="docs/demo.gif" width="300" alt="App Demo"/>
+</p>
+
 Production-ready Kotlin Multiplatform architecture for fintech Android apps.
 
 This starter focuses on the patterns teams actually need in production: offline-first data flows, strict shared-domain boundaries, Koin-powered dependency injection, SQLDelight as the source of truth, and a Compose-first Android UI that stays thin over shared business logic.
