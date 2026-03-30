@@ -1,10 +1,9 @@
 # kmp-fintech-starter
- 
-[![Android CI](https://github.com/your-org/kmp-fintech-starter/actions/workflows/android-ci.yml/badge.svg)](https://github.com/your-org/kmp-fintech-starter/actions/workflows/android-ci.yml)
-![Build](https://github.com/your-org/kmp-fintech-starter/workflows/Android%20CI/badge.svg)
-![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-purple)
-![KMP](https://img.shields.io/badge/KMP-Multiplatform-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
+
+![Android CI](https://github.com/rudradave1/kmp-fintech-starter/actions/workflows/android-ci.yml/badge.svg)
+![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-7F52FF?logo=kotlin&logoColor=white)
+![KMP](https://img.shields.io/badge/KMP-Multiplatform-blue?logo=kotlin)
+![License](https://img.shields.io/badge/License-MIT-green) 
 
 Production-ready Kotlin Multiplatform architecture for fintech Android apps.
 
@@ -92,7 +91,7 @@ kmp-fintech-starter/
 ### Run locally
 
 ```bash
-git clone https://github.com/your-org/kmp-fintech-starter.git
+git clone https://github.com/rudradave1/kmp-fintech-starter.git
 cd kmp-fintech-starter
 ./gradlew :shared:testDebugUnitTest
 ./gradlew :androidApp:assembleDebug
@@ -177,9 +176,9 @@ Contributions are welcome.
 ## Repository identity
 
 - Name: `kmp-fintech-starter`
-- GitHub: `github.com/your-org/kmp-fintech-starter`
+- GitHub: `github.com/rudradave1/kmp-fintech-starter`
 - Tagline: Production-ready Kotlin Multiplatform architecture for fintech Android apps
-- Author: Your Team
+- Author: Rudra Dave — Senior Android Engineer
 
 ## License
 
