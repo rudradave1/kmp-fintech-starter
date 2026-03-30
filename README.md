@@ -1,6 +1,5 @@
 # kmp-fintech-starter
-
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+ 
 [![Android CI](https://github.com/rudradave1/kmp-fintech-starter/actions/workflows/android-ci.yml/badge.svg)](https://github.com/rudradave1/kmp-fintech-starter/actions/workflows/android-ci.yml)
 ![Build](https://github.com/rudradave1/kmp-fintech-starter/workflows/Android%20CI/badge.svg)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-purple)
