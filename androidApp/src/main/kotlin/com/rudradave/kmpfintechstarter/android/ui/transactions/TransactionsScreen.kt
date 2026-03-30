@@ -1,6 +1,7 @@
 package com.rudradave.kmpfintechstarter.android.ui.transactions
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -27,7 +28,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -112,6 +117,11 @@ private fun TransactionsScreen(
                 val groupedTransactions = state.transactions
                     .groupBy { it.groupDate() }
                     .toSortedMap(compareByDescending { it })
+                var listVisible by remember(state.transactions) { mutableStateOf(false) }
+                LaunchedEffect(state.transactions) {
+                    listVisible = false
+                    listVisible = true
+                }
 
                 LazyColumn(
                     modifier = Modifier
@@ -127,18 +137,24 @@ private fun TransactionsScreen(
                         )
                     }
                     item {
-                        AnimatedContent(
-                            targetState = state.selectedCategory,
-                            transitionSpec = {
-                                (fadeIn(animationSpec = tween(220)) + slideInVertically { it / 10 }) togetherWith
-                                    (fadeOut(animationSpec = tween(180)) + slideOutVertically { -it / 12 })
-                            },
-                            label = "transaction-filter-content",
+                        AnimatedVisibility(
+                            visible = listVisible,
+                            enter = fadeIn(animationSpec = tween(durationMillis = 320)),
+                            label = "transaction-list-load",
                         ) {
-                            TransactionGroupedContent(
-                                groupedTransactions = groupedTransactions,
-                                onTransactionClick = onTransactionClick,
-                            )
+                            AnimatedContent(
+                                targetState = state.selectedCategory,
+                                transitionSpec = {
+                                    (fadeIn(animationSpec = tween(220)) + slideInVertically { it / 10 }) togetherWith
+                                        (fadeOut(animationSpec = tween(180)) + slideOutVertically { -it / 12 })
+                                },
+                                label = "transaction-filter-content",
+                            ) {
+                                TransactionGroupedContent(
+                                    groupedTransactions = groupedTransactions,
+                                    onTransactionClick = onTransactionClick,
+                                )
+                            }
                         }
                     }
                 }

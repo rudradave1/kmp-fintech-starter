@@ -58,6 +58,19 @@ internal fun TransactionCategory.icon(): ImageVector {
     }
 }
 
+internal fun TransactionCategory.emoji(): String {
+    return when (this) {
+        TransactionCategory.FOOD -> "🍔"
+        TransactionCategory.TRANSPORT -> "🚗"
+        TransactionCategory.ENTERTAINMENT -> "🎬"
+        TransactionCategory.SHOPPING -> "🛍️"
+        TransactionCategory.HEALTH -> "💊"
+        TransactionCategory.UTILITIES -> "⚡"
+        TransactionCategory.TRANSFER -> "💸"
+        TransactionCategory.OTHER -> "💳"
+    }
+}
+
 internal fun TransactionCategory.tint(): Color {
     return when (this) {
         TransactionCategory.FOOD -> CategoryFood

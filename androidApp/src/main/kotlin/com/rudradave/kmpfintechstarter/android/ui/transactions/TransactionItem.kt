@@ -21,8 +21,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.dp
 import com.rudradave.kmpfintechstarter.android.ui.components.FintechStatusBadge
 import com.rudradave.kmpfintechstarter.android.ui.theme.FintechDimens
@@ -51,8 +53,8 @@ internal fun TransactionItem(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 88.dp)
-                    .padding(horizontal = FintechDimens.screenPadding, vertical = FintechDimens.listRowPadding),
+                    .heightIn(min = 96.dp)
+                    .padding(horizontal = FintechDimens.screenPadding, vertical = 12.dp),
                 horizontalArrangement = Arrangement.spacedBy(FintechDimens.largeSpacing),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -62,10 +64,10 @@ internal fun TransactionItem(
                     color = transaction.category.tint().copy(alpha = 0.18f),
                 ) {
                     Box(contentAlignment = Alignment.Center) {
-                        Icon(
-                            imageVector = transaction.category.icon(),
-                            contentDescription = stringResource(transaction.category.labelRes()),
-                            tint = transaction.category.tint(),
+                        Text(
+                            text = transaction.category.emoji(),
+                            fontSize = 20.sp,
+                            textAlign = TextAlign.Center,
                         )
                     }
                 }
@@ -75,7 +77,11 @@ internal fun TransactionItem(
                 ) {
                     Text(
                         text = transaction.merchantName,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontSize = 16.sp,
+                            lineHeight = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                        ),
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
@@ -90,7 +96,11 @@ internal fun TransactionItem(
                 ) {
                     Text(
                         text = transaction.formattedAmount(),
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontSize = 16.sp,
+                            lineHeight = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                        ),
                         color = if (transaction.isDebit) MaterialTheme.colorScheme.error else transaction.category.tint(),
                         textAlign = TextAlign.End,
                     )

@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rudradave.kmpfintechstarter.android.ui.theme.FintechDimens
@@ -99,6 +100,21 @@ internal fun BankCard(
                     .size(150.dp)
                     .clip(CircleShape)
                     .background(Color.White.copy(alpha = 0.07f)),
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(1.dp)
+                    .clip(RoundedCornerShape(FintechDimens.cardCorner))
+                    .background(
+                        brush = Brush.radialGradient(
+                            colors = listOf(
+                                Color.White.copy(alpha = 0.16f),
+                                Color.Transparent,
+                            ),
+                            radius = 520f,
+                        ),
+                    ),
             )
             Box(
                 modifier = Modifier
@@ -171,14 +187,18 @@ internal fun BankCard(
                 Column(verticalArrangement = Arrangement.spacedBy(FintechDimens.mediumSpacing)) {
                     Text(
                         text = formattedBalance,
-                        style = MaterialTheme.typography.headlineLarge,
+                        style = MaterialTheme.typography.headlineLarge.copy(
+                            fontSize = 32.sp,
+                            lineHeight = 36.sp,
+                            fontWeight = FontWeight.Bold,
+                        ),
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.Bottom,
                     ) {
                         Text(
@@ -187,6 +207,7 @@ internal fun BankCard(
                             fontFamily = FontFamily.Monospace,
                             color = Color.White.copy(alpha = 0.88f),
                         )
+                        Spacer(modifier = Modifier.weight(1f))
                         Text(
                             text = holderName.uppercase(),
                             style = MaterialTheme.typography.labelLarge,
