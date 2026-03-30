@@ -1,14 +1,14 @@
 # kmp-fintech-starter
  
-[![Android CI](https://github.com/rudradave1/kmp-fintech-starter/actions/workflows/android-ci.yml/badge.svg)](https://github.com/rudradave1/kmp-fintech-starter/actions/workflows/android-ci.yml)
-![Build](https://github.com/rudradave1/kmp-fintech-starter/workflows/Android%20CI/badge.svg)
+[![Android CI](https://github.com/your-org/kmp-fintech-starter/actions/workflows/android-ci.yml/badge.svg)](https://github.com/your-org/kmp-fintech-starter/actions/workflows/android-ci.yml)
+![Build](https://github.com/your-org/kmp-fintech-starter/workflows/Android%20CI/badge.svg)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-purple)
 ![KMP](https://img.shields.io/badge/KMP-Multiplatform-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 Production-ready Kotlin Multiplatform architecture for fintech Android apps.
 
-Built by Rudra Dave, Senior Android Engineer, this starter focuses on the patterns teams actually need in production: offline-first data flows, strict shared-domain boundaries, Koin-powered dependency injection, SQLDelight as the source of truth, and a Compose-first Android UI that stays thin over shared business logic.
+This starter focuses on the patterns teams actually need in production: offline-first data flows, strict shared-domain boundaries, Koin-powered dependency injection, SQLDelight as the source of truth, and a Compose-first Android UI that stays thin over shared business logic.
 
 ## Motivation
 
@@ -92,7 +92,7 @@ kmp-fintech-starter/
 ### Run locally
 
 ```bash
-git clone https://github.com/rudradave1/kmp-fintech-starter.git
+git clone https://github.com/your-org/kmp-fintech-starter.git
 cd kmp-fintech-starter
 ./gradlew :shared:testDebugUnitTest
 ./gradlew :androidApp:assembleDebug
@@ -177,9 +177,9 @@ Contributions are welcome.
 ## Repository identity
 
 - Name: `kmp-fintech-starter`
-- GitHub: `github.com/rudradave1/kmp-fintech-starter`
+- GitHub: `github.com/your-org/kmp-fintech-starter`
 - Tagline: Production-ready Kotlin Multiplatform architecture for fintech Android apps
-- Author: Rudra Dave — Senior Android Engineer
+- Author: Your Team
 
 ## License
 

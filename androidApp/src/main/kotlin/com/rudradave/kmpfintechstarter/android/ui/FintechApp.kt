@@ -1,9 +1,14 @@
 package com.rudradave.kmpfintechstarter.android.ui
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ReceiptLong
 import androidx.compose.material.icons.outlined.AccountBalance
-import androidx.compose.material.icons.outlined.ReceiptLong
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -39,19 +44,21 @@ fun FintechApp() {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
-            NavigationBar {
-                NavigationBarItem(
-                    selected = destination?.hasRoute<DashboardRoute>() == true,
-                    onClick = { navController.navigate(DashboardRoute) },
-                    icon = { Icon(Icons.Outlined.AccountBalance, contentDescription = null) },
-                    label = { Text(text = stringResource(R.string.dashboard_title)) },
-                )
-                NavigationBarItem(
-                    selected = destination?.hasRoute<TransactionsRoute>() == true,
-                    onClick = { navController.navigate(TransactionsRoute) },
-                    icon = { Icon(Icons.Outlined.ReceiptLong, contentDescription = null) },
-                    label = { Text(text = stringResource(R.string.transactions_title)) },
-                )
+            if (destination?.hasRoute<TransactionDetailRoute>() != true) {
+                NavigationBar {
+                    NavigationBarItem(
+                        selected = destination?.hasRoute<DashboardRoute>() == true,
+                        onClick = { navController.navigate(DashboardRoute) },
+                        icon = { Icon(Icons.Outlined.AccountBalance, contentDescription = null) },
+                        label = { Text(text = stringResource(R.string.dashboard_title)) },
+                    )
+                    NavigationBarItem(
+                        selected = destination?.hasRoute<TransactionsRoute>() == true,
+                        onClick = { navController.navigate(TransactionsRoute) },
+                        icon = { Icon(Icons.AutoMirrored.Outlined.ReceiptLong, contentDescription = null) },
+                        label = { Text(text = stringResource(R.string.transactions_title)) },
+                    )
+                }
             }
         },
     ) { innerPadding ->
@@ -60,19 +67,32 @@ fun FintechApp() {
             startDestination = DashboardRoute,
             modifier = Modifier.padding(innerPadding),
         ) {
-            composable<DashboardRoute> {
+            composable<DashboardRoute>(
+                enterTransition = { fadeIn(animationSpec = tween(220)) },
+                exitTransition = { fadeOut(animationSpec = tween(180)) },
+            ) {
                 DashboardScreenRoute(
                     onTransactionClick = { navController.navigate(TransactionDetailRoute(it)) },
+                    onSeeAllClick = { navController.navigate(TransactionsRoute) },
                 )
             }
-            composable<TransactionsRoute> {
+            composable<TransactionsRoute>(
+                enterTransition = { fadeIn(animationSpec = tween(220)) + slideInHorizontally { it / 10 } },
+                exitTransition = { fadeOut(animationSpec = tween(180)) + slideOutHorizontally { -it / 10 } },
+            ) {
                 TransactionsScreenRoute(
                     onTransactionClick = { navController.navigate(TransactionDetailRoute(it)) },
                 )
             }
-            composable<TransactionDetailRoute> { backStackEntryForRoute ->
+            composable<TransactionDetailRoute>(
+                enterTransition = { fadeIn(animationSpec = tween(220)) + slideInHorizontally { it / 6 } },
+                exitTransition = { fadeOut(animationSpec = tween(180)) + slideOutHorizontally { it / 8 } },
+            ) { backStackEntryForRoute ->
                 val route = backStackEntryForRoute.toRoute<TransactionDetailRoute>()
-                TransactionDetailScreenRoute(transactionId = route.id)
+                TransactionDetailScreenRoute(
+                    transactionId = route.id,
+                    onBackClick = { navController.popBackStack() },
+                )
             }
         }
     }

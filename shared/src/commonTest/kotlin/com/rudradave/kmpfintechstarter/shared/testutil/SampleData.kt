@@ -9,10 +9,10 @@ internal object SampleData {
     fun account(balance: Double = 1_850.50): Account {
         return Account(
             id = "acc-1",
-            holderName = "Rudra Dave",
+            holderName = "Aarav Kapoor",
             balance = balance,
-            currency = "USD",
-            maskedCardNumber = "**** 4821",
+            currency = "INR",
+            maskedCardNumber = "**** 1184",
         )
     }
 
@@ -21,7 +21,7 @@ internal object SampleData {
             transaction(
                 id = "txn-1",
                 category = TransactionCategory.FOOD,
-                amount = 14.20,
+                amount = 347.00,
                 status = TransactionStatus.COMPLETED,
                 timestamp = 1_717_286_400_000,
                 isDebit = true,
@@ -29,7 +29,7 @@ internal object SampleData {
             transaction(
                 id = "txn-2",
                 category = TransactionCategory.TRANSFER,
-                amount = 1_200.00,
+                amount = 5_000.00,
                 status = TransactionStatus.COMPLETED,
                 timestamp = 1_717_372_800_000,
                 isDebit = false,
@@ -37,7 +37,7 @@ internal object SampleData {
             transaction(
                 id = "txn-3",
                 category = TransactionCategory.TRANSPORT,
-                amount = 32.40,
+                amount = 234.00,
                 status = TransactionStatus.PENDING,
                 timestamp = 1_717_459_200_000,
                 isDebit = true,
@@ -57,7 +57,7 @@ internal object SampleData {
             id = id,
             merchantName = "Merchant $id",
             amount = amount,
-            currency = "USD",
+            currency = "INR",
             category = category,
             status = status,
             timestamp = timestamp,

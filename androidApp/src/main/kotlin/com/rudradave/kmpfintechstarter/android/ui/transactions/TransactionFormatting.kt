@@ -14,19 +14,36 @@ import androidx.compose.material.icons.outlined.SwapHoriz
 import androidx.compose.material.icons.outlined.Train
 import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material.icons.outlined.WaterDrop
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.rudradave.kmpfintechstarter.android.R
+import com.rudradave.kmpfintechstarter.android.ui.theme.CategoryEntertainment
+import com.rudradave.kmpfintechstarter.android.ui.theme.CategoryFood
+import com.rudradave.kmpfintechstarter.android.ui.theme.CategoryHealth
+import com.rudradave.kmpfintechstarter.android.ui.theme.CategoryShopping
+import com.rudradave.kmpfintechstarter.android.ui.theme.CategoryTransfer
+import com.rudradave.kmpfintechstarter.android.ui.theme.CategoryTransport
+import com.rudradave.kmpfintechstarter.android.ui.theme.CategoryUtilities
+import com.rudradave.kmpfintechstarter.android.ui.theme.StatusCompleted
+import com.rudradave.kmpfintechstarter.android.ui.theme.StatusFailed
+import com.rudradave.kmpfintechstarter.android.ui.theme.StatusPending
+import com.rudradave.kmpfintechstarter.android.ui.theme.StatusRefunded
 import com.rudradave.kmpfintechstarter.shared.domain.model.Transaction
 import com.rudradave.kmpfintechstarter.shared.domain.model.TransactionCategory
 import com.rudradave.kmpfintechstarter.shared.domain.model.TransactionStatus
 import java.text.NumberFormat
 import java.time.Instant
+import java.time.LocalDateTime
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import java.util.Currency
 import java.util.Locale
+import java.util.UUID
+
+private val indianLocale = Locale("en", "IN")
+private val headerMonthFormatter = DateTimeFormatter.ofPattern("MMMM yyyy", indianLocale)
+private val detailDateFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy, hh:mm a", indianLocale)
 
 internal fun TransactionCategory.icon(): ImageVector {
     return when (this) {
@@ -38,6 +55,19 @@ internal fun TransactionCategory.icon(): ImageVector {
         TransactionCategory.HEALTH -> Icons.Outlined.LocalHospital
         TransactionCategory.TRANSFER -> Icons.Outlined.SwapHoriz
         TransactionCategory.OTHER -> Icons.Outlined.Category
+    }
+}
+
+internal fun TransactionCategory.tint(): Color {
+    return when (this) {
+        TransactionCategory.FOOD -> CategoryFood
+        TransactionCategory.TRANSPORT -> CategoryTransport
+        TransactionCategory.SHOPPING -> CategoryShopping
+        TransactionCategory.ENTERTAINMENT -> CategoryEntertainment
+        TransactionCategory.UTILITIES -> CategoryUtilities
+        TransactionCategory.HEALTH -> CategoryHealth
+        TransactionCategory.TRANSFER -> CategoryTransfer
+        TransactionCategory.OTHER -> CategoryTransfer
     }
 }
 
@@ -65,6 +95,15 @@ internal fun TransactionStatus.labelRes(): Int {
     }
 }
 
+internal fun TransactionStatus.tint(): Color {
+    return when (this) {
+        TransactionStatus.PENDING -> StatusPending
+        TransactionStatus.COMPLETED -> StatusCompleted
+        TransactionStatus.FAILED -> StatusFailed
+        TransactionStatus.REFUNDED -> StatusRefunded
+    }
+}
+
 internal fun TransactionStatus.icon(): ImageVector {
     return when (this) {
         TransactionStatus.PENDING -> Icons.Outlined.Pending
@@ -75,15 +114,12 @@ internal fun TransactionStatus.icon(): ImageVector {
 }
 
 internal fun Transaction.formattedAmount(): String {
-    val formatter = NumberFormat.getCurrencyInstance(Locale.getDefault()).apply {
-        currency = resolvedCurrency(this@formattedAmount.currency)
-    }
     val prefix = if (isDebit) "-" else "+"
-    return prefix + formatter.format(amount)
+    return prefix + formatCurrencyAmount(amount = amount, currencyCode = currency)
 }
 
 internal fun formatCurrencyAmount(amount: Double, currencyCode: String): String {
-    return NumberFormat.getCurrencyInstance(Locale.getDefault()).apply {
+    return NumberFormat.getCurrencyInstance(indianLocale).apply {
         currency = resolvedCurrency(currencyCode)
     }.format(amount)
 }
@@ -95,14 +131,37 @@ internal fun Transaction.groupDate(): LocalDate {
 internal fun Long.formatDateTime(): String {
     return Instant.ofEpochMilli(this)
         .atZone(ZoneId.systemDefault())
-        .format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))
+        .format(detailDateFormatter)
 }
 
-internal fun LocalDate.formatForHeader(): String {
-    return format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+@StringRes
+internal fun LocalDate.relativeHeaderRes(now: LocalDate = LocalDate.now()): Int? {
+    return when {
+        this == now -> R.string.group_today
+        this == now.minusDays(1) -> R.string.group_yesterday
+        year == now.year && month == now.month && isAfter(now.minusDays(7)) -> R.string.group_this_week
+        year == now.minusMonths(1).year && month == now.minusMonths(1).month -> R.string.group_last_month
+        else -> null
+    }
+}
+
+internal fun LocalDate.formatMonthHeader(): String {
+    return format(headerMonthFormatter)
+}
+
+internal fun Transaction.referenceId(): String {
+    return UUID.nameUUIDFromBytes(id.toByteArray()).toString()
+}
+
+internal fun Transaction.typeLabelRes(): Int {
+    return if (isDebit) R.string.debit_label else R.string.credit_label
+}
+
+internal fun Long.toLocalDateTime(): LocalDateTime {
+    return Instant.ofEpochMilli(this).atZone(ZoneId.systemDefault()).toLocalDateTime()
 }
 
 private fun resolvedCurrency(currencyCode: String): Currency {
     return runCatching { Currency.getInstance(currencyCode) }
-        .getOrElse { Currency.getInstance(Locale.getDefault()) }
+        .getOrElse { Currency.getInstance(indianLocale) }
 }
