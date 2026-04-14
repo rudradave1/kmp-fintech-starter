@@ -1,15 +1,21 @@
+# Gradle and build outputs
+.gradle/
+.kotlin/
+build/
+**/build/
+
+# Local Android Studio / IntelliJ state
+.idea/
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+
+# Local machine and Android build state
 local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
+# OS files
+.DS_Store
+
+# Generated demo media should be added intentionally.
+docs/*.gif

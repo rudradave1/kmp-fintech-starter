@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rudradave.kmpfintechstarter.shared.presentation.TransactionViewModelTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-03-30T10:20:21" hostname="Rudras-Mac-mini-2.local" time="0.014">
-  <properties/>
-  <testcase name="emits error when refresh fails" classname="com.rudradave.kmpfintechstarter.shared.presentation.TransactionViewModelTest" time="0.011"/>
-  <testcase name="emits loaded transactions and responds to category filtering" classname="com.rudradave.kmpfintechstarter.shared.presentation.TransactionViewModelTest" time="0.003"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
