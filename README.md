@@ -84,6 +84,26 @@ kmp-fintech-starter/
 | Assertions | Kotest | 5.9.1 |
 | Android | minSdk / targetSdk / compileSdk | 26 / 35 / 35 |
 
+## Key Engineering Decisions
+
+- **SQLDelight over Room**
+  Chosen for true multiplatform support and deterministic schema control across Android and iOS.
+
+- **Ktor over Retrofit**
+  Enables shared networking layer across platforms and avoids Android-specific dependencies.
+
+- **Koin over Hilt**
+  Lightweight, multiplatform-friendly DI without annotation processing overhead.
+
+- **Offline-first as default**
+  Ensures UI consistency and avoids blank states in unreliable network conditions common in fintech.
+
+## Tradeoffs
+
+- Increased complexity vs single-platform apps
+- Requires strict module boundaries to avoid platform leakage
+- Higher initial setup cost for teams unfamiliar with KMP
+
 ## Setup
 
 ### Prerequisites
