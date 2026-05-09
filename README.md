@@ -23,6 +23,16 @@ Fintech apps have very little tolerance for inconsistent state, blank screens af
 - network failures degrade gracefully to cached data instead of collapsing the UI
 - convention plugins and a strict version catalog keep the build scalable from day one
 
+## Latest Polish Phase Improvements
+
+The template has been upgraded with production-grade features to make it a market-ready product:
+
+- **Security First**: Integrated hardware-backed biometric authentication with a dedicated lock screen.
+- **Advanced Data Viz**: Custom Donut Chart and category-wise spending breakdown on the dashboard.
+- **Modern UX**: Pull-to-refresh, shimmer loading states, and a smooth multi-page Onboarding flow.
+- **Productivity**: Added a "Quick Actions" hub (Send, Receive, Scan, Add) and live transaction search.
+- **Profile & Settings**: Full profile management shell with theme toggles and security settings.
+
 ## Architecture
 
 ```mermaid
@@ -63,7 +73,7 @@ kmp-fintech-starter/
 ### What each module owns
 
 - `shared`: domain models, repository contracts, Ktor client setup, SQLDelight schema, repository implementations, use cases, Koin shared modules, and platform-agnostic state holders.
-- `androidApp`: Material 3 UI, type-safe navigation, pull-to-refresh UX, dynamic color theming, string resources, and Android-specific startup.
+- `androidApp`: Material 3 UI, type-safe navigation, biometric security, pull-to-refresh UX, onboarding flow, and Android-specific startup.
 - `build-logic`: convention plugins that standardize compile SDK, target SDK, min SDK, Kotlin/Java toolchains, Compose, and KMP defaults.
 - `iosApp`: a lightweight SwiftUI sample that initializes Koin and demonstrates where shared flows would be consumed in a real iOS shell.
 

@@ -40,7 +40,11 @@ class TransactionViewModel(
             TransactionEvent.Refresh -> refresh()
             is TransactionEvent.FilterByCategory -> {
                 _uiState.value = _uiState.value.copy(selectedCategory = event.category, error = null)
-                observeTransactions(event.category)
+                observeTransactions(category = event.category)
+            }
+            is TransactionEvent.Search -> {
+                _uiState.value = _uiState.value.copy(searchQuery = event.query)
+                observeTransactions(query = event.query)
             }
             is TransactionEvent.SelectTransaction -> Unit
         }
@@ -51,13 +55,24 @@ class TransactionViewModel(
         cancel()
     }
 
-    private fun observeTransactions(category: TransactionCategory? = _uiState.value.selectedCategory) {
+    private fun observeTransactions(
+        category: TransactionCategory? = _uiState.value.selectedCategory,
+        query: String = _uiState.value.searchQuery
+    ) {
         observeJob?.cancel()
         observeJob = launch(dispatcherProvider.io) {
             val source = category?.let { filterByCategory(it) } ?: getTransactions()
             source.collectLatest { transactions ->
+                val filtered = if (query.isBlank()) {
+                    transactions
+                } else {
+                    transactions.filter {
+                        it.merchantName.contains(query, ignoreCase = true) ||
+                            it.category.name.contains(query, ignoreCase = true)
+                    }
+                }
                 _uiState.value = _uiState.value.copy(
-                    transactions = transactions,
+                    transactions = filtered,
                     isLoading = false,
                     isRefreshing = false,
                     error = null,
@@ -91,6 +106,7 @@ data class TransactionUiState(
     val error: String? = null,
     val selectedCategory: TransactionCategory? = null,
     val isRefreshing: Boolean = false,
+    val searchQuery: String = "",
 )
 
 /** User-driven events supported by the transaction screen. */
@@ -98,4 +114,5 @@ sealed interface TransactionEvent {
     data object Refresh : TransactionEvent
     data class FilterByCategory(val category: TransactionCategory?) : TransactionEvent
     data class SelectTransaction(val id: String) : TransactionEvent
+    data class Search(val query: String) : TransactionEvent
 }

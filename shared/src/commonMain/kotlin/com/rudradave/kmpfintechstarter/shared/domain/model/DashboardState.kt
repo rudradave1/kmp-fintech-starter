@@ -6,4 +6,5 @@ data class DashboardState(
     val recentTransactions: List<Transaction>,
     val monthlySpend: Double,
     val monthlyIncome: Double,
+    val spendingByCategory: Map<TransactionCategory, Double>,
 )

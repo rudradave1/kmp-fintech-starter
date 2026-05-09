@@ -19,6 +19,7 @@ import com.rudradave.kmpfintechstarter.shared.domain.usecase.SyncTransactionsUse
 import com.rudradave.kmpfintechstarter.shared.platform.DefaultDispatcherProvider
 import com.rudradave.kmpfintechstarter.shared.platform.DispatcherProvider
 import com.rudradave.kmpfintechstarter.shared.presentation.DashboardViewModel
+import com.rudradave.kmpfintechstarter.shared.presentation.ProfileViewModel
 import com.rudradave.kmpfintechstarter.shared.presentation.TransactionDetailViewModel
 import com.rudradave.kmpfintechstarter.shared.presentation.TransactionViewModel
 import io.ktor.client.engine.HttpClientEngineFactory
@@ -61,6 +62,7 @@ val viewModelModule: Module = module {
     factory { TransactionViewModel(get(), get(), get(), get()) }
     factory { DashboardViewModel(get(), get(), get()) }
     factory { (transactionId: String) -> TransactionDetailViewModel(transactionId, get(), get()) }
+    factory { ProfileViewModel(get(), get(), get()) }
 }
 
 /** Shared Koin module that provides coroutine dispatchers. */

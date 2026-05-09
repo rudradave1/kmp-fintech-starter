@@ -31,6 +31,9 @@ import com.rudradave.kmpfintechstarter.android.R
 import com.rudradave.kmpfintechstarter.android.ui.components.BankCard
 import com.rudradave.kmpfintechstarter.android.ui.components.DashboardLoadingState
 import com.rudradave.kmpfintechstarter.android.ui.components.EmptyState
+import com.rudradave.kmpfintechstarter.android.ui.components.PromoCard
+import com.rudradave.kmpfintechstarter.android.ui.components.QuickActions
+import com.rudradave.kmpfintechstarter.android.ui.components.SpendingBreakdown
 import com.rudradave.kmpfintechstarter.android.ui.theme.FintechDimens
 import com.rudradave.kmpfintechstarter.android.ui.theme.FintechStarterTheme
 import com.rudradave.kmpfintechstarter.android.ui.transactions.TransactionItem
@@ -89,13 +92,17 @@ private fun DashboardScreen(
         },
     ) { innerPadding ->
         when {
-            state.isLoading -> DashboardLoadingState(modifier = Modifier.padding(innerPadding))
-            state.dashboardState == null -> EmptyState(
-                titleRes = R.string.recent_transactions_title,
-                bodyRes = R.string.empty_dashboard_body,
-                modifier = Modifier.padding(innerPadding),
-                onAction = onRefresh,
-            )
+            state.isLoading && !state.isRefreshing -> {
+                DashboardLoadingState(modifier = Modifier.padding(innerPadding))
+            }
+            state.dashboardState == null -> {
+                EmptyState(
+                    titleRes = R.string.recent_transactions_title,
+                    bodyRes = R.string.empty_dashboard_body,
+                    modifier = Modifier.padding(innerPadding),
+                    onAction = onRefresh,
+                )
+            }
             else -> {
                 val dashboard = requireNotNull(state.dashboardState)
                 LazyColumn(
@@ -123,6 +130,13 @@ private fun DashboardScreen(
                                 holderName = dashboard.account.holderName,
                                 networkLabel = stringResource(R.string.account_card_network),
                             )
+                            PromoCard(
+                                title = "Refer & Earn ₹500",
+                                description = "Invite your friends to Fintech Starter and get rewards.",
+                                actionLabel = "Invite Now",
+                                onAction = {}
+                            )
+                            QuickActions(modifier = Modifier.fillMaxWidth())
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.spacedBy(FintechDimens.largeSpacing),
@@ -148,6 +162,11 @@ private fun DashboardScreen(
                                     contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                                 )
                             }
+                            SpendingBreakdown(
+                                spendingByCategory = dashboard.spendingByCategory,
+                                totalSpend = dashboard.monthlySpend,
+                                modifier = Modifier.fillMaxWidth()
+                            )
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -236,6 +255,12 @@ private fun DashboardScreenPreview() {
                     ),
                     monthlySpend = 18325.5,
                     monthlyIncome = 88000.0,
+                    spendingByCategory = mapOf(
+                        TransactionCategory.FOOD to 4500.0,
+                        TransactionCategory.SHOPPING to 8200.0,
+                        TransactionCategory.TRANSPORT to 2100.0,
+                        TransactionCategory.OTHER to 3525.5,
+                    )
                 ),
             ),
             onRefresh = {},

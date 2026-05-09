@@ -23,6 +23,11 @@ class GetDashboardDataUseCase(
             val now = currentTimeMillis()
             val thirtyDaysInMillis = 30L * 24L * 60L * 60L * 1000L
             val monthlyTransactions = transactions.filter { now - it.timestamp <= thirtyDaysInMillis }
+            val spendingByCategory = monthlyTransactions
+                .filter(Transaction::isDebit)
+                .groupBy { it.category }
+                .mapValues { entry -> entry.value.sumOf { it.amount } }
+
             DashboardState(
                 account = account ?: Account(
                     id = "",
@@ -34,6 +39,7 @@ class GetDashboardDataUseCase(
                 recentTransactions = transactions.take(5),
                 monthlySpend = monthlyTransactions.filter(Transaction::isDebit).sumOf(Transaction::amount),
                 monthlyIncome = monthlyTransactions.filterNot(Transaction::isDebit).sumOf(Transaction::amount),
+                spendingByCategory = spendingByCategory,
             )
         }
     }

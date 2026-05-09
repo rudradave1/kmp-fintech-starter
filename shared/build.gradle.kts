@@ -13,12 +13,13 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.sqldelight.runtime)
             implementation(libs.sqldelight.coroutines.extensions)
+            implementation(libs.androidx.datastore.preferences)
             implementation(libs.koin.core)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
             implementation(libs.sqldelight.android.driver)
-            implementation(libs.androidx.datastore.preferences)
+            implementation(libs.androidx.biometric)
             implementation(libs.koin.android)
         }
         iosMain.dependencies {

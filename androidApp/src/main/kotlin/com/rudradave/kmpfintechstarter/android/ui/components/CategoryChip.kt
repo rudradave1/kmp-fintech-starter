@@ -46,21 +46,19 @@ internal fun CategoryChip(
     )
 
     Surface(
-        modifier = modifier
-            .clip(shape)
-            .border(width = 1.dp, color = borderColor.value, shape = shape),
+        modifier = modifier,
         onClick = onClick,
         shape = shape,
         color = containerColor.value,
+        border = androidx.compose.foundation.BorderStroke(width = 1.dp, color = borderColor.value),
         tonalElevation = 0.dp,
     ) {
-        Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp)) {
-            Text(
-                text = label,
-                style = MaterialTheme.typography.labelLarge,
-                color = contentColor.value,
-            )
-        }
+        Text(
+            text = label,
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
+            style = MaterialTheme.typography.labelLarge,
+            color = contentColor.value,
+        )
     }
 }
 

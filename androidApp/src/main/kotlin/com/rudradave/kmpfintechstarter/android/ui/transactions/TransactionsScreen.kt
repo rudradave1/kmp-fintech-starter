@@ -9,30 +9,16 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Refresh
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -131,6 +117,19 @@ private fun TransactionsScreen(
                     verticalArrangement = Arrangement.spacedBy(FintechDimens.itemSpacing),
                 ) {
                     item {
+                        OutlinedTextField(
+                            value = state.searchQuery,
+                            onValueChange = { onEvent(TransactionEvent.Search(it)) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = FintechDimens.screenPadding),
+                            placeholder = { Text("Search transactions...") },
+                            leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = null) },
+                            singleLine = true,
+                            shape = RoundedCornerShape(12.dp),
+                        )
+                    }
+                    item {
                         CategoryFilters(
                             selected = state.selectedCategory,
                             onSelected = { category -> onEvent(TransactionEvent.FilterByCategory(category)) },
@@ -203,9 +202,11 @@ private fun CategoryFilters(
         modifier = Modifier
             .fillMaxWidth()
             .horizontalScroll(rememberScrollState())
-            .padding(horizontal = FintechDimens.screenPadding, vertical = FintechDimens.smallSpacing),
+            .padding(vertical = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(FintechDimens.chipSpacing),
+        verticalAlignment = Alignment.CenterVertically
     ) {
+        Spacer(modifier = Modifier.width(FintechDimens.screenPadding))
         CategoryChip(
             label = stringResource(R.string.category_all),
             selected = selected == null,
@@ -222,6 +223,7 @@ private fun CategoryFilters(
                     onClick = { onSelected(category) },
                 )
             }
+        Spacer(modifier = Modifier.width(FintechDimens.screenPadding))
     }
 }
 

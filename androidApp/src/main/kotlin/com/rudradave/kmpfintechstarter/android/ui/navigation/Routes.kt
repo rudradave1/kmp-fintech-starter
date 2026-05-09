@@ -6,7 +6,13 @@ import kotlinx.serialization.Serializable
 data object DashboardRoute
 
 @Serializable
+data object OnboardingRoute
+
+@Serializable
 data object TransactionsRoute
+
+@Serializable
+data object ProfileRoute
 
 @Serializable
 data class TransactionDetailRoute(val id: String)
