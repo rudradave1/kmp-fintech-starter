@@ -1,15 +1,14 @@
 package com.rudradave.kmpfintechstarter.shared.presentation
 
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
 import com.rudradave.kmpfintechstarter.shared.domain.model.Transaction
 import com.rudradave.kmpfintechstarter.shared.domain.model.TransactionCategory
 import com.rudradave.kmpfintechstarter.shared.domain.usecase.FilterTransactionsByCategoryUseCase
 import com.rudradave.kmpfintechstarter.shared.domain.usecase.GetTransactionsUseCase
 import com.rudradave.kmpfintechstarter.shared.domain.usecase.SyncTransactionsUseCase
 import com.rudradave.kmpfintechstarter.shared.platform.DispatcherProvider
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,9 +21,7 @@ class TransactionViewModel(
     private val syncTransactions: SyncTransactionsUseCase,
     private val filterByCategory: FilterTransactionsByCategoryUseCase,
     private val dispatcherProvider: DispatcherProvider,
-) : CoroutineScope {
-    private val job: Job = SupervisorJob()
-    override val coroutineContext = job + dispatcherProvider.main
+) : ScreenModel {
     private var observeJob: Job? = null
 
     private val _uiState = MutableStateFlow(TransactionUiState(isLoading = true))
@@ -50,17 +47,12 @@ class TransactionViewModel(
         }
     }
 
-    /** Releases resources owned by the state holder. */
-    fun clear() {
-        cancel()
-    }
-
     private fun observeTransactions(
         category: TransactionCategory? = _uiState.value.selectedCategory,
         query: String = _uiState.value.searchQuery
     ) {
         observeJob?.cancel()
-        observeJob = launch(dispatcherProvider.io) {
+        observeJob = screenModelScope.launch(dispatcherProvider.io) {
             val source = category?.let { filterByCategory(it) } ?: getTransactions()
             source.collectLatest { transactions ->
                 val filtered = if (query.isBlank()) {
@@ -82,7 +74,7 @@ class TransactionViewModel(
     }
 
     private fun refresh() {
-        launch(dispatcherProvider.io) {
+        screenModelScope.launch(dispatcherProvider.io) {
             _uiState.value = _uiState.value.copy(isRefreshing = true, error = null)
             syncTransactions()
                 .onFailure { throwable ->

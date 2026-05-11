@@ -1,4 +1,4 @@
-package com.rudradave.kmpfintechstarter.android.ui.components
+package com.rudradave.kmpfintechstarter.shared.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,9 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.rudradave.kmpfintechstarter.android.ui.theme.FintechStarterTheme
+import com.rudradave.kmpfintechstarter.shared.ui.theme.FintechStarterTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 /** Displays a compact pill badge for a transaction status. */
 @Composable
@@ -35,7 +35,7 @@ internal fun FintechStatusBadge(
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFF08101F)
+@Preview
 @Composable
 private fun FintechStatusBadgePreview() {
     FintechStarterTheme {

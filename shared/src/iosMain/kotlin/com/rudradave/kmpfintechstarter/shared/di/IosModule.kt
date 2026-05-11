@@ -39,7 +39,16 @@ val iosModule = module {
             (documentDirectory.path!! + "/user_prefs.preferences_pb").toPath()
         }
     }
+    @OptIn(com.russhwolf.settings.ExperimentalSettingsImplementation::class)
+    single<com.rudradave.kmpfintechstarter.shared.data.local.SecureStorage> {
+        com.rudradave.kmpfintechstarter.shared.data.local.SecureStorageImpl(
+            com.russhwolf.settings.KeychainSettings("com.rudradave.kmpfintechstarter.secure")
+        )
+    }
+
+
 }
+
 
 /** Starts shared Koin for SwiftUI entry points. */
 fun initKoinIos(): KoinApplication = initKoin(platformModules = listOf(iosModule))

@@ -40,7 +40,6 @@ class TransactionViewModelTest {
             filtered.transactions.shouldContainExactly(
                 listOf(SampleData.transactions().first { it.category == TransactionCategory.FOOD }),
             )
-            viewModel.clear()
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -70,7 +69,6 @@ class TransactionViewModelTest {
             val refreshed = awaitItem()
             refreshed.error shouldBe "refresh failed"
             refreshed.isRefreshing shouldBe false
-            viewModel.clear()
             cancelAndIgnoreRemainingEvents()
         }
     }

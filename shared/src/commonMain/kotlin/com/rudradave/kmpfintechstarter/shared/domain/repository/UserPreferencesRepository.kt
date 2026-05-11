@@ -7,6 +7,6 @@ interface UserPreferencesRepository {
     suspend fun setOnboardingCompleted(completed: Boolean)
     fun isBiometricEnabled(): Flow<Boolean>
     suspend fun setBiometricEnabled(enabled: Boolean)
-    fun isDarkMode(): Flow<Boolean>
+    fun isDarkMode(): Flow<Boolean?>
     suspend fun setDarkMode(enabled: Boolean)
 }

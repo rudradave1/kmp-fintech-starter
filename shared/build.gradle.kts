@@ -1,6 +1,7 @@
 plugins {
-    alias(libs.plugins.kmp.library)
+    id("com.rudradave.kmp.library")
 }
+
 
 kotlin {
     sourceSets {
@@ -15,11 +16,31 @@ kotlin {
             implementation(libs.sqldelight.coroutines.extensions)
             implementation(libs.androidx.datastore.preferences)
             implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+            
+            implementation(libs.voyager.navigator)
+            implementation(libs.voyager.tab.navigator)
+            implementation(libs.voyager.screenmodel)
+            implementation(libs.voyager.transitions)
+            implementation(libs.voyager.koin)
+            
+            implementation(libs.multiplatform.settings)
         }
+
+
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
             implementation(libs.sqldelight.android.driver)
             implementation(libs.androidx.biometric)
+            implementation(libs.sqlcipher.android)
+            implementation(libs.sqlite.android)
             implementation(libs.koin.android)
         }
         iosMain.dependencies {
@@ -36,9 +57,6 @@ dependencies {
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
 
-android {
-    namespace = "com.rudradave.kmpfintechstarter.shared"
-}
 
 sqldelight {
     databases {

@@ -27,11 +27,12 @@ gradlePlugin {
     plugins {
         register("kmpLibrary") {
             id = "com.rudradave.kmp.library"
-            implementationClass = "KmpLibraryPlugin"
+            implementationClass = "com.rudradave.buildlogic.KmpLibraryPlugin"
         }
         register("androidApp") {
             id = "com.rudradave.android.app"
-            implementationClass = "AndroidAppPlugin"
+            implementationClass = "com.rudradave.buildlogic.AndroidAppPlugin"
         }
+
     }
 }

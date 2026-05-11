@@ -4,6 +4,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import platform.Foundation.NSDate
+import platform.Foundation.timeIntervalSince1970
+
 
 internal class IosSyncMetadataStore : SyncMetadataStore {
     private val state = MutableStateFlow<Long?>(null)
@@ -16,3 +18,5 @@ internal class IosSyncMetadataStore : SyncMetadataStore {
 }
 
 actual fun currentTimeMillis(): Long = (NSDate().timeIntervalSince1970 * 1000.0).toLong()
+
+

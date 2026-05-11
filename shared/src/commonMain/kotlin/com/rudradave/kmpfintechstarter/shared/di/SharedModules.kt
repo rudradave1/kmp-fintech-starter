@@ -41,6 +41,7 @@ val databaseModule: Module = module {
     single { LocalFintechSeedDataInitializer(get()) }
 }
 
+
 /** Shared Koin module that provides repository implementations. */
 val repositoryModule: Module = module {
     single<TransactionRepository> { TransactionRepositoryImpl(get(), get(), get()) }

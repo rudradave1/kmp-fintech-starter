@@ -24,7 +24,7 @@ class AndroidAppPlugin : Plugin<Project> {
             defaultConfig {
                 applicationId = "com.rudradave.kmpfintechstarter"
                 minSdk = 26
-                targetSdk = 35
+                targetSdk = 34
                 versionCode = 1
                 versionName = "1.0.0"
                 testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -39,7 +39,7 @@ class AndroidAppPlugin : Plugin<Project> {
             packaging {
                 resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
                 jniLibs {
-                    useLegacyPackaging = true
+                    useLegacyPackaging = false
                 }
             }
 

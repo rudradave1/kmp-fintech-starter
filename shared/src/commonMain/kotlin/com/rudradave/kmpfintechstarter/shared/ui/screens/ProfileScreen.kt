@@ -1,65 +1,65 @@
-package com.rudradave.kmpfintechstarter.android.ui.profile
+package com.rudradave.kmpfintechstarter.shared.ui.screens
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rudradave.kmpfintechstarter.android.R
-import com.rudradave.kmpfintechstarter.android.ui.theme.FintechDimens
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.koin.koinScreenModel
 import com.rudradave.kmpfintechstarter.shared.platform.BiometricStatus
 import com.rudradave.kmpfintechstarter.shared.presentation.ProfileUiState
 import com.rudradave.kmpfintechstarter.shared.presentation.ProfileViewModel
+import com.rudradave.kmpfintechstarter.shared.ui.theme.FintechDimens
 import kotlinx.coroutines.launch
-import org.koin.compose.koinInject
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ProfileScreenRoute() {
-    val viewModel = koinInject<ProfileViewModel>()
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
+class ProfileScreen : Screen {
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    override fun Content() {
+        val viewModel = koinScreenModel<ProfileViewModel>()
+        val uiState by viewModel.uiState.collectAsState()
+        val snackbarHostState = remember { SnackbarHostState() }
+        val scope = rememberCoroutineScope()
 
-    Scaffold(
-        topBar = {
-            TopAppBar(title = { Text("Profile") })
-        },
-        snackbarHost = { SnackbarHost(snackbarHostState) }
-    ) { padding ->
-        ProfileScreen(
-            state = uiState,
-            onToggleBiometric = viewModel::toggleBiometric,
-            onToggleDarkMode = viewModel::toggleDarkMode,
-            onActionClick = { message ->
-                scope.launch {
-                    snackbarHostState.showSnackbar(message)
-                }
+        Scaffold(
+            topBar = {
+                TopAppBar(title = { Text("Profile") })
             },
-            modifier = Modifier.padding(padding)
-        )
+            snackbarHost = { SnackbarHost(snackbarHostState) }
+        ) { padding ->
+            ProfileContent(
+                state = uiState,
+                onToggleBiometric = viewModel::toggleBiometric,
+                onToggleDarkMode = viewModel::toggleDarkMode,
+                onActionClick = { message ->
+                    scope.launch {
+                        snackbarHostState.showSnackbar(message)
+                    }
+                },
+                modifier = Modifier.padding(padding)
+            )
+        }
     }
 }
 
 @Composable
-private fun ProfileScreen(
+private fun ProfileContent(
     state: ProfileUiState,
     onToggleBiometric: (Boolean) -> Unit,
     onToggleDarkMode: (Boolean) -> Unit,
     onActionClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val systemInDarkTheme = isSystemInDarkTheme()
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(FintechDimens.screenPadding),
@@ -99,21 +99,22 @@ private fun ProfileScreen(
                     if (state.biometricStatus == BiometricStatus.READY) {
                         Switch(
                             checked = state.isBiometricEnabled, 
-                            onCheckedChange = { onToggleBiometric(it) }
+                            onCheckedChange = null // Row handles click to avoid double toggle
                         )
                     }
                 }
             )
 
+            val currentDarkMode = state.isDarkMode ?: systemInDarkTheme
             PreferenceItem(
                 icon = Icons.Default.DarkMode,
                 title = "Dark Mode",
                 subtitle = "Enable dark theme for the app",
-                onClick = { onToggleDarkMode(!state.isDarkMode) },
+                onClick = { onToggleDarkMode(!currentDarkMode) },
                 trailing = {
                     Switch(
-                        checked = state.isDarkMode, 
-                        onCheckedChange = { onToggleDarkMode(it) }
+                        checked = currentDarkMode, 
+                        onCheckedChange = null // Row handles click to avoid double toggle
                     )
                 }
             )
@@ -136,7 +137,7 @@ private fun ProfileScreen(
                 onClick = { onActionClick("Notification settings coming soon") }
             )
             PreferenceItem(
-                icon = Icons.Default.Help,
+                icon = Icons.AutoMirrored.Filled.Help,
                 title = "Help & Support",
                 onClick = { onActionClick("Support center coming soon") }
             )
@@ -242,7 +243,7 @@ private fun PreferenceItem(
                     Icon(
                         imageVector = Icons.Default.ChevronRight,
                         contentDescription = null,
-                        tint = if (enabled) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
